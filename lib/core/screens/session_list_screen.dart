@@ -69,26 +69,26 @@ class _SessionListScreenState extends State<SessionListScreen> {
 
   Future<void> _confirmDeleteSession(Session session) async {
     final title = session.title.trim().isEmpty
-        ? 'Untitled session'
+        ? '未命名会话'
         : session.title;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete session?'),
+        title: const Text('删除会话？'),
         content: Text(
-          'Delete "$title" from the remote Hermes history? This cannot be undone.',
+          '将 "$title" 从远程 Hermes 历史中删除？此操作不可撤销。',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Cancel'),
+            child: const Text('取消'),
           ),
           TextButton(
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(dialogContext).colorScheme.error,
             ),
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Delete'),
+            child: const Text('删除'),
           ),
         ],
       ),
@@ -111,14 +111,14 @@ class _SessionListScreenState extends State<SessionListScreen> {
         _deletingSessionIds.remove(session.id);
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Session deleted from remote Hermes.')),
+        const SnackBar(content: Text('已从远程 Hermes 删除会话。')),
       );
     } catch (e) {
       if (!mounted) return;
       setState(() => _deletingSessionIds.remove(session.id));
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Could not delete session: $e')));
+      ).showSnackBar(SnackBar(content: Text('无法删除会话：$e')));
     }
   }
 
@@ -126,7 +126,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
     final sessionId = GatewayChatClient.generateSessionId();
     final session = Session(
       id: sessionId,
-      title: 'New Chat',
+      title: '新建会话',
       model: 'hermes-agent',
       source: 'mobile',
       messageCount: 0,
@@ -184,7 +184,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
       ),
       drawer: _buildDrawer(),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'New Chat',
+        tooltip: '新建会话',
         onPressed: _createNewSession,
         child: const Icon(Icons.chat, color: Colors.black),
       ),
@@ -225,26 +225,26 @@ class _SessionListScreenState extends State<SessionListScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.memory),
-              title: const Text('Memory'),
+              title: const Text('记忆'),
               onTap: () =>
                   _openScreen(MemoryScreen(connection: widget.connection)),
             ),
             ListTile(
               leading: const Icon(Icons.schedule),
-              title: const Text('Cron Jobs'),
+              title: const Text('定时任务'),
               onTap: () =>
                   _openScreen(CronScreen(connection: widget.connection)),
             ),
             ListTile(
               leading: const Icon(Icons.auto_awesome),
-              title: const Text('Skills'),
+              title: const Text('技能'),
               onTap: () =>
                   _openScreen(SkillsScreen(connection: widget.connection)),
             ),
             const Divider(),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
+              title: const Text('设置'),
               onTap: () =>
                   _openScreen(SettingsScreen(connection: widget.connection)),
             ),
@@ -267,17 +267,17 @@ class _SessionListScreenState extends State<SessionListScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Connecting to ${widget.connection.baseUrl}...',
+              '正在连接 ${widget.connection.baseUrl}...',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
-              'Make sure the Gateway API Server is running\n(hermes gateway status)',
+              '请确保网关 API 服务正在运行\\n（执行 hermes gateway status 查看）',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 24),
-            ElevatedButton(onPressed: _checkHealth, child: const Text('Retry')),
+            ElevatedButton(onPressed: _checkHealth, child: const Text('重试')),
           ],
         ),
       );
@@ -293,7 +293,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
             Icon(Icons.error_outline, size: 48, color: Colors.orange),
             const SizedBox(height: 16),
             Text(
-              'Connection issue',
+              '连接问题',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
@@ -308,7 +308,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _fetchSessions,
-              child: const Text('Retry'),
+              child: const Text('重试'),
             ),
           ],
         ),
@@ -323,12 +323,12 @@ class _SessionListScreenState extends State<SessionListScreen> {
             Icon(Icons.chat_bubble_outline, size: 48, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
-              'No sessions yet',
+              '暂无会话',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Text(
-              'Tap the + button to start a new chat',
+              '点击 + 按钮开始新会话',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),

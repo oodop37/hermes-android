@@ -77,7 +77,7 @@ class WsClient {
         for (var entry in _pending.values) {
           entry.timer?.cancel();
           if (!entry.completer.isCompleted) {
-            entry.completer.completeError(Exception('Connection closed'));
+            entry.completer.completeError(Exception('连接已关闭'));
           }
         }
         _pending.clear();
@@ -161,7 +161,7 @@ class WsClient {
     Duration timeout = const Duration(seconds: 30),
   }) async {
     if (!_connected || _channel == null) {
-      throw Exception('Not connected');
+      throw Exception('未连接');
     }
 
     final id = _nextId++;
@@ -194,7 +194,7 @@ class WsClient {
     Duration timeout = const Duration(seconds: 120),
   }) async {
     if (!_connected || _channel == null) {
-      throw Exception('Not connected');
+      throw Exception('未连接');
     }
 
     final id = _nextId++;
@@ -228,7 +228,7 @@ class WsClient {
     if (result['error'] != null) {
       final errMap = result['error'] as Map<String, dynamic>;
       final errorMsg = errMap['message'] as String?;
-      throw JsonRpcError('session.resume', errorMsg ?? 'Unknown error');
+      throw JsonRpcError('session.resume', errorMsg ?? '未知错误');
     }
     return result['result']?['session_id'] as String? ?? sessionId;
   }
@@ -245,7 +245,7 @@ class WsClient {
     if (result['error'] != null) {
       final errMap = result['error'] as Map<String, dynamic>;
       final errorMsg = errMap['message'] as String?;
-      throw JsonRpcError('prompt.submit', errorMsg ?? 'Unknown error');
+      throw JsonRpcError('prompt.submit', errorMsg ?? '未知错误');
     }
     return result['result']?['session_id'] as String? ?? '';
   }
@@ -256,7 +256,7 @@ class WsClient {
     if (result['error'] != null) {
       final errMap = result['error'] as Map<String, dynamic>;
       final errorMsg = errMap['message'] as String?;
-      throw JsonRpcError('prompt.submit', errorMsg ?? 'Unknown error');
+      throw JsonRpcError('prompt.submit', errorMsg ?? '未知错误');
     }
     return result['result']?['session_id'] as String? ?? '';
   }
@@ -269,7 +269,7 @@ class WsClient {
     if (result['error'] != null) {
       final errMap = result['error'] as Map<String, dynamic>;
       final errorMsg = errMap['message'] as String?;
-      throw JsonRpcError('session.create', errorMsg ?? 'Unknown error');
+      throw JsonRpcError('session.create', errorMsg ?? '未知错误');
     }
     return result['result']?['session_id'] as String? ?? '';
   }
@@ -282,7 +282,7 @@ class WsClient {
     if (result['error'] != null) {
       final errMap = result['error'] as Map<String, dynamic>;
       final errorMsg = errMap['message'] as String?;
-      throw JsonRpcError('session.create', errorMsg ?? 'Unknown error');
+      throw JsonRpcError('session.create', errorMsg ?? '未知错误');
     }
     return result['result']?['session_id'] as String? ?? sessionId;
   }
@@ -294,7 +294,7 @@ class WsClient {
     for (var entry in _pending.values) {
       entry.timer?.cancel();
       if (!entry.completer.isCompleted) {
-        entry.completer.completeError(Exception('Connection closed'));
+      entry.completer.completeError(Exception('连接已关闭'));
       }
     }
     _pending.clear();

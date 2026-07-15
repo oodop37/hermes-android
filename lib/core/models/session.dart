@@ -26,7 +26,7 @@ class Session {
     final endedAt = json['ended_at'];
     return Session(
       id: json['id'] ?? '',
-      title: json['title'] ?? 'Untitled',
+      title: json['title'] ?? '未命名',
       model: json['model'] ?? 'Default',
       source: json['source'] ?? '',
       messageCount: json['message_count'] ?? 0,

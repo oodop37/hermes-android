@@ -121,13 +121,13 @@ class _ChatScreenState extends State<ChatScreen> {
       if (!mounted) return;
       setState(() {
         _speechAvailable = available;
-        _voiceStatus = available ? null : 'Speech recognition is unavailable';
+        _voiceStatus = available ? null : '语音识别不可用';
       });
     } catch (e) {
       if (!mounted) return;
       setState(() {
         _speechAvailable = false;
-        _voiceStatus = 'Voice setup failed: $e';
+        _voiceStatus = '语音设置失败：$e';
       });
     }
   }
@@ -167,7 +167,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                _voiceStatus ?? 'Speech recognition is unavailable',
+                _voiceStatus ?? '语音识别不可用',
               ),
             ),
           );
@@ -178,7 +178,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     await _flutterTts.stop();
     if (!mounted) return;
-    setState(() => _voiceStatus = 'Listening…');
+    setState(() => _voiceStatus = '正在聆听…');
     await _speechToText.listen(
       listenOptions: SpeechListenOptions(
         listenFor: const Duration(seconds: 60),
@@ -464,7 +464,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Send failed: $e'),
+          content: Text('发送失败：$e'),
           backgroundColor: Colors.orange,
           duration: const Duration(seconds: 6),
         ),
@@ -532,7 +532,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   ),
                   SizedBox(width: 8),
-                  Text('Responding…', style: TextStyle(fontSize: 13)),
+                  Text('正在回复…', style: TextStyle(fontSize: 13)),
                 ],
               ),
             )
@@ -540,7 +540,7 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               icon: const Icon(Icons.refresh),
               onPressed: _loading ? null : _fetchMessages,
-              tooltip: 'Refresh',
+              tooltip: '刷新',
             ),
         ],
       ),
@@ -576,7 +576,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: TextField(
                 controller: _textController,
                 decoration: InputDecoration(
-                  hintText: 'Type a message…',
+                  hintText: '输入消息…',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
@@ -602,7 +602,7 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: (!_loading && !_streaming && !_sending)
                   ? _toggleVoiceInput
                   : null,
-              tooltip: _listening ? 'Stop listening' : 'Speak to Hermes',
+              tooltip: _listening ? '停止聆听' : '对 Hermes 说话',
             ),
             IconButton(
               icon: Icon(
@@ -615,8 +615,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
               },
               tooltip: _voiceReplyEnabled
-                  ? 'Spoken replies on'
-                  : 'Spoken replies off',
+                  ? '语音回复已开启'
+                  : '语音回复已关闭',
             ),
             const SizedBox(width: 4),
             CircleAvatar(
@@ -629,7 +629,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   : IconButton(
                       icon: const Icon(Icons.send, size: 20),
                       onPressed: _sendMessage,
-                      tooltip: 'Send',
+                      tooltip: '发送',
                     ),
             ),
           ],
@@ -653,7 +653,7 @@ class _ChatScreenState extends State<ChatScreen> {
               const Icon(Icons.warning_amber, size: 48, color: Colors.orange),
               const SizedBox(height: 16),
               Text(
-                'Failed to load messages',
+                '加载消息失败',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
@@ -665,7 +665,7 @@ class _ChatScreenState extends State<ChatScreen> {
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: _fetchMessages,
-                child: const Text('Retry'),
+                child: const Text('重试'),
               ),
             ],
           ),

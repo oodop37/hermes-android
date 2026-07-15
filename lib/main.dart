@@ -50,7 +50,7 @@ class HermesAppState extends State<HermesApp> {
     const gold = Color(0xFFD4AF37);
 
     return MaterialApp(
-      title: 'Hermes Agent',
+      title: 'Hermes 智能助手',
       themeMode: HermesApp.getThemeMode(widget.connManager.prefs),
       theme: ThemeData(
         colorSchemeSeed: gold,
@@ -243,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('Update API Key'),
+          title: const Text('更新 API 密钥'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -282,8 +282,8 @@ class _HomeScreenState extends State<HomeScreen> {
               TextField(
                 controller: ctrl,
                 decoration: const InputDecoration(
-                  labelText: 'API Key',
-                  hintText: 'API_SERVER_KEY from ~/.hermes/.env',
+                  labelText: 'API 密钥',
+                  hintText: 'API_SERVER_KEY，来自 ~/.hermes/.env',
                 ),
                 obscureText: true,
                 enabled: !validating,
@@ -293,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             TextButton(
               onPressed: validating ? null : () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: const Text('取消'),
             ),
             FilledButton(
               onPressed: validating
@@ -325,14 +325,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.pop(ctx);
                         } else {
                           setDialogState(() {
-                            error = 'Invalid API key. Server returned 401.';
+                            error = 'API 密钥无效。服务器返回 401。';
                             validating = false;
                           });
                         }
                       } catch (e) {
                         if (!ctx.mounted) return;
                         setDialogState(() {
-                          error = 'Cannot reach ${conn.host}:${conn.port}.';
+                          error = '无法连接到 ${conn.host}:${conn.port}。';
                           validating = false;
                         });
                       }
@@ -346,7 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                       ),
                     )
-                  : const Text('Save'),
+                  : const Text('保存'),
             ),
           ],
         ),
@@ -374,7 +374,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('Dashboard / Proxy Settings'),
+          title: const Text('仪表盘 / 代理设置'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -382,10 +382,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Text(
-                    'Used for hosted path prefixes and for the Settings, '
-                    'Memory, Skills and Cron tabs. Leave username/password '
-                    'blank for an open dashboard, or enable proxied mode when '
-                    'your reverse proxy injects dashboard auth.',
+                    '用于自定义路径前缀以及设置、记忆、技能和定时任务标签页。'\
+                    '留空表示开放仪表盘；若反向代理已注入认证，请开启代理模式。',
                     style: TextStyle(color: Colors.grey[600], fontSize: 12),
                   ),
                 ),
@@ -424,8 +422,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextField(
                   controller: gatewayPrefixCtrl,
                   decoration: const InputDecoration(
-                    labelText: 'Gateway path prefix',
-                    hintText: 'e.g. /profile/peter',
+                    labelText: '网关路径前缀',
+                    hintText: '例如 /profile/peter',
                   ),
                   autocorrect: false,
                   enabled: !validating,
@@ -434,8 +432,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextField(
                   controller: dashboardPrefixCtrl,
                   decoration: const InputDecoration(
-                    labelText: 'Dashboard path prefix',
-                    hintText: 'e.g. /dashboard',
+                    labelText: '仪表盘路径前缀',
+                    hintText: '例如 /dashboard',
                   ),
                   autocorrect: false,
                   enabled: !validating,
@@ -444,9 +442,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 SwitchListTile(
                   value: proxied,
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Dashboard behind proxy'),
+                  title: const Text('仪表盘位于代理之后'),
                   subtitle: const Text(
-                    'Proxy injects auth; app sends clean requests',
+                    '代理会注入认证；应用直接发送干净请求',
                   ),
                   onChanged: validating
                       ? null
@@ -456,8 +454,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextField(
                   controller: portCtrl,
                   decoration: const InputDecoration(
-                    labelText: 'Dashboard Port',
-                    hintText: 'Leave blank for default (9119)',
+                    labelText: '仪表盘端口',
+                    hintText: '留空使用默认 (9119)',
                   ),
                   keyboardType: TextInputType.number,
                   enabled: !validating,
@@ -466,7 +464,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextField(
                   controller: userCtrl,
                   decoration: const InputDecoration(
-                    labelText: 'Username (optional)',
+                    labelText: '用户名（可选）',
                   ),
                   autocorrect: false,
                   enabled: !validating,
@@ -475,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextField(
                   controller: passCtrl,
                   decoration: const InputDecoration(
-                    labelText: 'Password (optional)',
+                    labelText: '密码（可选）',
                   ),
                   obscureText: true,
                   enabled: !validating,
@@ -486,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             TextButton(
               onPressed: validating ? null : () => Navigator.pop(ctx),
-              child: const Text('Cancel'),
+              child: const Text('取消'),
             ),
             FilledButton(
               onPressed: validating
@@ -497,7 +495,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? null
                           : int.tryParse(portText);
                       if (portText.isNotEmpty && (port == null || port <= 0)) {
-                        setDialogState(() => error = 'Invalid port number.');
+                        setDialogState(() => error = '端口号无效。');
                         return;
                       }
                       final user = userCtrl.text.trim();
@@ -522,7 +520,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (!ok) {
                           setDialogState(() {
                             error =
-                                'Could not reach/authenticate the Gateway API at '
+                                '无法连接/认证网关 API：'
                                 '${conn.host}:${conn.port}$gatewayPrefix.';
                             validating = false;
                           });
@@ -559,9 +557,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (!ctx.mounted) return;
                         setDialogState(() {
                           error =
-                              'Could not reach/authenticate the dashboard at '
+                              '无法连接/认证仪表盘：'
                               '${conn.host}:${port ?? conn.dashboardPort}. '
-                              'Check the port and credentials.';
+                              '请检查端口和凭据。';
                           validating = false;
                         });
                       }
@@ -575,7 +573,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                       ),
                     )
-                  : const Text('Save'),
+                  : const Text('保存'),
             ),
           ],
         ),
@@ -612,14 +610,14 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
           itemBuilder: (_) => [
-            const PopupMenuItem(value: 'apikey', child: Text('Update API Key')),
+            const PopupMenuItem(value: 'apikey', child: Text('更新 API 密钥')),
             const PopupMenuItem(
               value: 'dashboard',
-              child: Text('Dashboard / Proxy Settings'),
+              child: Text('仪表盘 / 代理设置'),
             ),
             const PopupMenuItem(
               value: 'delete',
-              child: Text('Delete', style: TextStyle(color: Colors.red)),
+              child: Text('删除', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
@@ -650,12 +648,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icon(Icons.cloud_outlined, size: 64, color: Colors.grey[800]),
                   const SizedBox(height: 16),
                   Text(
-                    'No connections',
+                    '暂无连接',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Tap + to add a remote Hermes Gateway\n(API Server, port 8642)',
+                    '点击 + 添加远程 Hermes 网关\\n（API 服务，端口 8642）',
                     style: Theme.of(
                       context,
                     ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
@@ -687,7 +685,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Add Connection',
+        tooltip: '添加连接',
         onPressed: _showAddDialog,
         child: const Icon(Icons.add, color: Colors.black),
       ),
@@ -768,8 +766,8 @@ class _AddDialogState extends State<_AddDialog> {
       if (!ok) {
         setState(() {
           _error = apiKey.isEmpty
-              ? 'Server requires an API key. Enter your API_SERVER_KEY.'
-              : 'Invalid API key. Server returned 401.';
+              ? '服务器需要 API 密钥。请输入您的 API_SERVER_KEY。'
+              : 'API 密钥无效。服务器返回 401。';
           _validating = false;
         });
         return;
@@ -812,8 +810,8 @@ class _AddDialogState extends State<_AddDialog> {
           if (!mounted) return;
           setState(() {
             _error =
-                'Gateway connected, but the dashboard could not be reached or '
-                'authenticated. Check the dashboard details, or clear them to skip.';
+                '网关已连接，但无法访问仪表盘或'\
+                '表示已认证。请检查仪表盘详情，或清空它们以跳过。';
             _validating = false;
             _showDashboard = true;
           });
@@ -839,7 +837,7 @@ class _AddDialogState extends State<_AddDialog> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = 'Cannot reach $host:$port. Check the host and port.';
+        _error = '无法连接到 $host:$port。请检查主机和端口。';
         _validating = false;
       });
     }
@@ -848,7 +846,7 @@ class _AddDialogState extends State<_AddDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Add Gateway Connection'),
+      title: const Text('添加网关连接'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -883,15 +881,15 @@ class _AddDialogState extends State<_AddDialog> {
             ],
             TextField(
               controller: _label,
-              decoration: const InputDecoration(labelText: 'Label'),
+              decoration: const InputDecoration(labelText: '标签'),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: _host,
               decoration: const InputDecoration(
-                labelText: 'Host',
+                labelText: '主机',
                 hintText:
-                    '192.168.1.50, 100.x.y.z, or hermes-machine.tailnet.ts.net',
+                    '例如 192.168.1.50、100.x.y.z 或 hermes-machine.tailnet.ts.net',
               ),
               keyboardType: TextInputType.text,
               autocorrect: false,
@@ -900,8 +898,8 @@ class _AddDialogState extends State<_AddDialog> {
             TextField(
               controller: _port,
               decoration: const InputDecoration(
-                labelText: 'Port',
-                hintText: '8642 (API Server)',
+                labelText: '端口',
+                hintText: '8642（API 服务）',
               ),
               keyboardType: TextInputType.number,
             ),
@@ -909,8 +907,8 @@ class _AddDialogState extends State<_AddDialog> {
             TextField(
               controller: _apiKey,
               decoration: const InputDecoration(
-                labelText: 'API Key',
-                hintText: 'API_SERVER_KEY from ~/.hermes/.env',
+                labelText: 'API 密钥',
+                hintText: 'API_SERVER_KEY，来自 ~/.hermes/.env',
               ),
               obscureText: true,
             ),
@@ -930,7 +928,7 @@ class _AddDialogState extends State<_AddDialog> {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'Custom proxy and dashboard details',
+                      '自定义代理与仪表盘详情',
                       style: TextStyle(color: Colors.grey[500], fontSize: 13),
                     ),
                   ],
@@ -942,9 +940,9 @@ class _AddDialogState extends State<_AddDialog> {
               TextField(
                 controller: _gatewayPrefix,
                 decoration: const InputDecoration(
-                  labelText: 'Gateway path prefix',
+                  labelText: '网关路径前缀',
                   hintText:
-                      'e.g. /profile/peter (proxy path before /api/ and /v1/)',
+                      '例如 /profile/peter（/api/ 和 /v1/ 之前的代理路径）',
                 ),
                 autocorrect: false,
               ),
@@ -952,8 +950,8 @@ class _AddDialogState extends State<_AddDialog> {
               TextField(
                 controller: _dashboardPrefix,
                 decoration: const InputDecoration(
-                  labelText: 'Dashboard path prefix',
-                  hintText: 'e.g. /dashboard (proxy path before /api/)',
+                  labelText: '仪表盘路径前缀',
+                  hintText: '例如 /dashboard（/api/ 之前的代理路径）',
                 ),
                 autocorrect: false,
               ),
@@ -961,25 +959,25 @@ class _AddDialogState extends State<_AddDialog> {
               SwitchListTile(
                 value: _dashboardProxied,
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Dashboard behind proxy'),
+                title: const Text('仪表盘位于代理之后'),
                 subtitle: const Text(
-                  'Nginx injects auth — app sends clean requests',
+                  'Nginx 注入认证 — 应用发送干净请求',
                 ),
                 onChanged: (v) => setState(() => _dashboardProxied = v),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Text(
-                  'Optional. For the Memory/Cron/Skills/Settings tabs. Leave '
-                  'blank to use the default dashboard port (9119) with no login.',
+                  '可选。用于记忆/定时任务/技能/设置标签页，留空'
+                  '则使用默认仪表盘端口 (9119) 且无需登录。',
                   style: TextStyle(color: Colors.grey[600], fontSize: 12),
                 ),
               ),
               TextField(
                 controller: _dashPort,
                 decoration: const InputDecoration(
-                  labelText: 'Dashboard Port',
-                  hintText: 'Leave blank for default (9119)',
+                  labelText: '仪表盘端口',
+                  hintText: '留空使用默认 (9119)',
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -987,7 +985,7 @@ class _AddDialogState extends State<_AddDialog> {
               TextField(
                 controller: _dashUser,
                 decoration: const InputDecoration(
-                  labelText: 'Dashboard Username (optional)',
+                  labelText: '仪表盘用户名（可选）',
                 ),
                 autocorrect: false,
               ),
@@ -995,7 +993,7 @@ class _AddDialogState extends State<_AddDialog> {
               TextField(
                 controller: _dashPass,
                 decoration: const InputDecoration(
-                  labelText: 'Dashboard Password (optional)',
+                  labelText: '仪表盘密码（可选）',
                 ),
                 obscureText: true,
               ),
@@ -1006,7 +1004,7 @@ class _AddDialogState extends State<_AddDialog> {
       actions: [
         TextButton(
           onPressed: _validating ? null : () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(
           onPressed: _validating ? null : _validateAndSave,
@@ -1019,7 +1017,7 @@ class _AddDialogState extends State<_AddDialog> {
                     color: Colors.white,
                   ),
                 )
-              : const Text('Connect'),
+              : const Text('连接'),
         ),
       ],
     );

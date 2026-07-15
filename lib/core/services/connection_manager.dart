@@ -540,10 +540,10 @@ class DashboardClient {
         }),
       );
       if (res.statusCode == 401) {
-        throw Exception('Dashboard login failed: invalid username or password');
+        throw Exception('仪表盘登录失败：用户名或密码错误');
       }
       if (res.statusCode != 200) {
-        throw Exception('Dashboard login failed: HTTP ${res.statusCode}');
+        throw Exception('仪表盘登录失败：HTTP ${res.statusCode}');
       }
       final setCookie = res.headers['set-cookie'] ?? '';
       // The `http` package folds multiple Set-Cookie headers into one
@@ -556,7 +556,7 @@ class DashboardClient {
       ).firstMatch(setCookie);
       if (match == null) {
         throw Exception(
-          'Dashboard login succeeded but no session cookie found',
+        throw Exception('仪表盘登录成功，但未找到会话 Cookie');
         );
       }
       _cookie = '${match.group(1)}=${match.group(2)}';
@@ -576,11 +576,11 @@ class DashboardClient {
   Future<String> _fetchToken() async {
     try {
       final res = await _http.get(Uri.parse('$_baseUrl/'));
-      if (res.statusCode != 200) throw Exception('Dashboard not reachable');
+      if (res.statusCode != 200) throw Exception('仪表盘无法访问');
       final match = RegExp(
         r'window\.__HERMES_SESSION_TOKEN__="([^"]+)";',
       ).firstMatch(res.body);
-      if (match == null) throw Exception('Session token not found');
+      if (match == null) throw Exception('未找到会话令牌');
       _token = match.group(1)!;
       return _token!;
     } finally {

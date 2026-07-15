@@ -125,7 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       await _client.setModel('main', _selectedProvider, _selectedModel);
       setState(() {
-        _successMsg = 'Model set to $_selectedModel — applies to new sessions';
+        _successMsg = '模型已设为 $_selectedModel — 应用于新会话';
       });
     } catch (e) {
       setState(() {
@@ -138,12 +138,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('设置'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _loading ? null : _loadData,
-            tooltip: 'Refresh',
+            tooltip: '刷新',
           ),
         ],
       ),
@@ -166,7 +166,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const Icon(Icons.error_outline, size: 48, color: Colors.orange),
               const SizedBox(height: 16),
               Text(
-                'Failed to load settings',
+                '加载设置失败',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
@@ -176,7 +176,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              ElevatedButton(onPressed: _loadData, child: const Text('Retry')),
+              ElevatedButton(onPressed: _loadData, child: const Text('重试')),
             ],
           ),
         ),
@@ -187,7 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       padding: const EdgeInsets.all(16),
       children: [
         // ---- Section: Model ----
-        _buildSectionHeader('Model Selection'),
+        _buildSectionHeader('模型选择'),
         if (_modelInfo != null)
           Card(
             child: Padding(
@@ -203,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Current Model',
+                        '当前模型',
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ],
@@ -279,7 +279,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: FilledButton.icon(
               onPressed: _applyModel,
               icon: const Icon(Icons.check),
-              label: const Text('Apply Model'),
+              label: const Text('应用模型'),
             ),
           ),
         ],
@@ -309,7 +309,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         const SizedBox(height: 16),
 
         // ---- Section: Theme ----
-        _buildSectionHeader('Appearance'),
+        _buildSectionHeader('外观'),
         _ThemeToggle(),
         const SizedBox(height: 8),
         _VerboseToggle(),
@@ -330,13 +330,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _infoRow('Label', widget.connection.label),
+                _infoRow('标签', widget.connection.label),
                 const SizedBox(height: 4),
-                _infoRow('Host', widget.connection.host),
+                _infoRow('主机', widget.connection.host),
                 const SizedBox(height: 4),
-                _infoRow('Port', '${widget.connection.port}'),
+                _infoRow('端口', '${widget.connection.port}'),
                 const SizedBox(height: 4),
-                _infoRow('Base URL', widget.connection.baseUrl),
+                _infoRow('基础地址', widget.connection.baseUrl),
               ],
             ),
           ),
@@ -435,15 +435,15 @@ class _AboutCardState extends State<_AboutCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Hermes Agent for Android',
+              'Hermes 安卓客户端',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text('Version ${_version.isNotEmpty ? _version : '…'}'),
             const SizedBox(height: 8),
             const Text(
-              'Browse and manage your Hermes Agent sessions from your phone. '
-              'Connects to a Hermes dashboard running on your local network.',
+              '在手机上浏览并管理您的 Hermes 智能体会话。'
+              '连接到您本地网络中运行的 Hermes 仪表盘。',
               style: TextStyle(color: Colors.grey),
             ),
           ],
@@ -483,8 +483,8 @@ class _VerboseToggleState extends State<_VerboseToggle> {
   Widget build(BuildContext context) {
     return Card(
       child: SwitchListTile(
-        title: const Text('Verbose Mode'),
-        subtitle: const Text('Show tool calls, thinking, and message metadata'),
+        title: const Text('详细模式'),
+        subtitle: const Text('显示工具调用、思考过程和消息元数据'),
         secondary: const Icon(Icons.terminal),
         value: _verbose,
         onChanged: _set,
@@ -529,17 +529,17 @@ class _ThemeToggleState extends State<_ThemeToggle> {
         segments: const [
           ButtonSegment(
             value: 'system',
-            label: Text('System'),
+            label: Text('跟随系统'),
             icon: Icon(Icons.brightness_auto, size: 18),
           ),
           ButtonSegment(
             value: 'dark',
-            label: Text('Dark'),
+            label: Text('深色'),
             icon: Icon(Icons.dark_mode, size: 18),
           ),
           ButtonSegment(
             value: 'light',
-            label: Text('Light'),
+            label: Text('浅色'),
             icon: Icon(Icons.light_mode, size: 18),
           ),
         ],
@@ -629,9 +629,9 @@ class _VoicePickerState extends State<_VoicePicker> {
     final locale = voice['locale'] ?? '';
     if (name == locale) return locale;
     final gender = name.contains('male')
-        ? '(male)'
+        ? '（男）'
         : name.contains('female')
-            ? '(female)'
+            ? '（女）'
             : '';
     return '$locale $gender  [$name]';
   }
@@ -652,8 +652,7 @@ class _VoicePickerState extends State<_VoicePicker> {
         child: Padding(
           padding: EdgeInsets.all(16),
           child: Text(
-            'No TTS voices found.\\n'
-            'Install Google Text-to-Speech and download voice data.',
+            '未找到 TTS 语音。\n请安装 Google 文字转语音并下载语音数据。',
             style: TextStyle(color: Colors.grey),
           ),
         ),
@@ -663,7 +662,7 @@ class _VoicePickerState extends State<_VoicePicker> {
     final items = <DropdownMenuItem<Map<String, String>?>>[
       const DropdownMenuItem(
         value: null,
-        child: Text('Auto (device default)'),
+        child: Text('自动（设备默认）'),
       ),
       ..._voices.map(
         (v) => DropdownMenuItem(
