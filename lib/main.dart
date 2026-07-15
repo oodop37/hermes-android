@@ -653,7 +653,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '点击 + 添加远程 Hermes 网关\\n（API 服务，端口 8642）',
+                    '点击 + 添加远程 Hermes 网关\n（API 服务，端口 8642）',
                     style: Theme.of(
                       context,
                     ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),

@@ -272,7 +272,7 @@ class _SessionListScreenState extends State<SessionListScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              '请确保网关 API 服务正在运行\\n（执行 hermes gateway status 查看）',
+              '请确保网关 API 服务正在运行\n（执行 hermes gateway status 查看）',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
             ),
